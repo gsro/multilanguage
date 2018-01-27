@@ -1,6 +1,6 @@
 <?php
 
-namespace GSRO\Multilanguage\Service;
+namespace GSRO\Multilanguage\Factory;
 
 use Psr\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
