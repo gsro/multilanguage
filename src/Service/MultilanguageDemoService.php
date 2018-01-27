@@ -14,7 +14,7 @@ class MultilanguageDemoService implements MultilanguageServiceInterface
             'demo' => [
                 'welcome' => [
                     'pageTitle' => 'Welcome to GSRO\\Multilanguage',
-                    'paragraph1' => 'Selected language ' . $languageCode . '<hr/>' .
+                    'paragraph1' => 'Selected language ' . $languageCode . ' ' .
                     'This is a demo of how multilanguage works, please switch to MultilanguageService class'
                 ]
             ]

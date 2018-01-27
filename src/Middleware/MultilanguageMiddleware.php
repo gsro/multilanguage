@@ -21,12 +21,23 @@ class MultilanguageMiddleware
     {
         $this->service = $service;
     }
-
+    
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param callable|null $next
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        $langCode = $request->getAttribute('multilanguage_language', 'en');
-        $languageBlocks = $this->service->getAllBlocks($langCode);
-        $request = $request->withAttribute('ml', $languageBlocks);
+        $requestedLanguage = $request->getQueryParams()['lang'] ?? 'en';
+    
+        if (!$this->service->hasLanguage($requestedLanguage)) {
+            $requestedLanguage = $this->service->getDefaultLanguageCode();
+        }
+    
+        $languageBlocks = $this->service->getAllBlocks($requestedLanguage);
+        $request = $request->withAttribute('multilanguage', $languageBlocks);
         return $next($request, $response);
     }
 }

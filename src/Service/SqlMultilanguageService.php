@@ -8,14 +8,17 @@ use Zend\Db\Sql\Sql;
  * Class MultilanguageService
  * @package GSRO\Multilanguage\Service\
  */
-class MultilanguageService implements MultilanguageServiceInterface
+class SqlMultilanguageService implements MultilanguageServiceInterface
 {
-
     /**
      * @var Sql
      */
     protected $sql;
-
+    
+    /**
+     * SqlMultilanguageService constructor.
+     * @param Sql $sql
+     */
     public function __construct(Sql $sql)
     {
         $this->sql = $sql;
@@ -28,21 +31,18 @@ class MultilanguageService implements MultilanguageServiceInterface
      */
     public function getAllBlocks($languageCode)
     {
-        $newData = [];
+        $data = [];
         $where = ['languageCode = ?' => $languageCode];
         $select = $this->sql->select();
         $select->from('multilanguage');
         $select->where($where);
         $statement = $this->sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
-        $data = [];
-        foreach ($results as $item) {
-            $data[] = $item;
+        
+        foreach ($results as $value) {
+            $data['ml'][$value['name']] = $value['value'];
         }
-        foreach ($data as $key => $value) {
-            $newData['ml'][$value['name']] = $value['value'];
-        }
-        return $newData;
+        return $data;
     }
 
     /**
@@ -56,8 +56,8 @@ class MultilanguageService implements MultilanguageServiceInterface
         $newData = [];
         $where = ['languageCode = ?' => $languageCode];
         $select = $this->sql->select();
-        $select->from('multilanguage');
-        $select->where($where)->limit(1);
+        $select->from('multilanguage')->limit(1);
+        $select->where($where);
         $statement = $this->sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
 
@@ -74,6 +74,16 @@ class MultilanguageService implements MultilanguageServiceInterface
      */
     public function getDefaultLanguageCode(): string
     {
-        // TODO: Implement getDefaultLanguageCode() method.
+        $newData = [];
+        $select = $this->sql->select();
+        $select->from('multilanguage')->limit(1);
+        $statement = $this->sql->prepareStatementForSqlObject($select);
+        $results = $statement->execute();
+        
+        foreach ($results as $item) {
+            return $item['languageCode'];
+        }
+    
+        return false;
     }
 }

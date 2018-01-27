@@ -11,7 +11,15 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "zendframework/zend-expressive-template": "^1.0",
+		"psr/container": "^1.0"
+    },
+    "require-dev": {
+        "zendframework/zend-expressive-twigrenderer": "^1.0",
+        "zendframework/zend-expressive": "^2.1",
+        "http-interop/http-middleware": "^0.4"
+    },
 	"autoload": {
 		"psr-4": {
 			"GSRO\\Multilanguage\\": "src"
