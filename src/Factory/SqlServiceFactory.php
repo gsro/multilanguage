@@ -2,6 +2,7 @@
 
 namespace GSRO\Multilanguage\Service;
 
+use Psr\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Sql;
 

@@ -2,7 +2,6 @@
 
 namespace GSRO\Multilanguage\Factory;
 
-use GSRO\Multilanguage\Service\MultilanguageServiceInterface;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
