@@ -23,7 +23,7 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
     {
         $this->sql = $sql;
     }
-
+    
     /**
      * list language content
      * @param string $languageCode
@@ -40,11 +40,11 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
         $results = $statement->execute();
         
         foreach ($results as $value) {
-            $data['ml'][$value['name']] = $value['value'];
+            $data[$value['name']] = $value['value'];
         }
         return $data;
     }
-
+    
     /**
      * Verify if language exists
      *
@@ -60,14 +60,14 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
         $select->where($where);
         $statement = $this->sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
-
+        
         foreach ($results as $item) {
             return true;
         }
-
+        
         return false;
     }
-
+    
     /**
      * Return default language code
      * @return string
@@ -83,7 +83,7 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
         foreach ($results as $item) {
             return $item['languageCode'];
         }
-    
+        
         return false;
     }
 }
