@@ -31,6 +31,20 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
      */
     public function getAllBlocks($languageCode)
     {
+        // fallback mode
+        $languageBlocks = $this->getAllBlocksForLanguage($this->getDefaultLanguageCode());
+        // add global feature
+        $languageBlocks = array_merge($languageBlocks, $this->getAllBlocksForLanguage('global'));
+        $languageBlocks = array_merge($languageBlocks, $this->getAllBlocksForLanguage($languageCode));
+        return $languageBlocks;
+    }
+    
+    /**
+     * @param $languageCode
+     * @return mixed
+     */
+    private function getAllBlocksForLanguage($languageCode)
+    {
         $data = [];
         $where = ['languageCode = ?' => $languageCode];
         $select = $this->sql->select();
@@ -38,7 +52,6 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
         $select->where($where);
         $statement = $this->sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
-        
         foreach ($results as $value) {
             $data[$value['name']] = $value['value'];
         }
