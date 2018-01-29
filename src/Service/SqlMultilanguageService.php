@@ -32,9 +32,9 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
     public function getAllBlocks($languageCode)
     {
         // fallback mode
-        $languageBlocks = $this->getAllBlocksForLanguage($this->getDefaultLanguageCode());
+        $languageBlocks = $this->getAllBlocksForLanguage('global');
         // add global feature
-        $languageBlocks = array_merge($languageBlocks, $this->getAllBlocksForLanguage('global'));
+        $languageBlocks = array_merge($languageBlocks, $this->getAllBlocksForLanguage($this->getDefaultLanguageCode()));
         $languageBlocks = array_merge($languageBlocks, $this->getAllBlocksForLanguage($languageCode));
         return $languageBlocks;
     }
