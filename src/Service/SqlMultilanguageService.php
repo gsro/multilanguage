@@ -90,6 +90,8 @@ class SqlMultilanguageService implements MultilanguageServiceInterface
         $newData = [];
         $select = $this->sql->select();
         $select->from('multilanguage')->limit(1);
+        $where = ['languageCode != ?' => 'global'];
+        $select->where($where);
         $statement = $this->sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
         
